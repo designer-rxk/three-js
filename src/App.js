@@ -1,25 +1,56 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React, {Suspense} from "react";
+import styled from "styled-components";
+import Background from "./Components/Background";
+import TextSection from "./Components/TextSection";
+import Box from "./Components/Box";
+import {Canvas} from "@react-three/fiber";
+import {OrbitControls} from "@react-three/drei";
+import Sphere from "./Components/AnimatedSphere"
+import World from "./Components/ModelDraco"
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Wrapper className="App">
+      <Background />
+      <TextSection />
+        <Canvas className={"canvas"}>
+            <OrbitControls enableZoom={false}/>
+            <ambientLight intensity={0.5}/>
+            <directionalLight position={[-2, 5, 2]} intensity={1}/>
+            <Suspense fallback={null}>
+                <Box/>
+            </Suspense>
+        </Canvas>
+
+        <Canvas className={"canvas"}>
+            <OrbitControls enableZoom={false}/>
+            <ambientLight intensity={0.5}/>
+            <directionalLight position={[-2, 5, 2]} intensity={1}/>
+            <Suspense fallback={null}>
+                <Sphere/>
+            </Suspense>
+        </Canvas>
+
+        <Canvas className={"canvas"}>
+            <OrbitControls enableZoom={false}/>
+            <ambientLight intensity={0.5}/>
+            <directionalLight position={[-2, 5, 2]} intensity={1}/>
+            <Suspense fallback={null}>
+                <World scale={2.5}/>
+            </Suspense>
+        </Canvas>
+    </Wrapper>
+
+
   );
 }
 
-export default App;
+const Wrapper = styled.div`
+  position: relative;
+  background: #1f1144;
+  
+  canvas{
+    height:500px;
+  }
+`;
